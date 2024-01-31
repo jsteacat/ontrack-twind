@@ -1,7 +1,14 @@
 <script setup>
 import BaseSelect from '@/components/base/BaseSelect.vue'
+import { isTimelineItemValid } from '@/validators'
 
-const props = defineProps(['timelineItem'])
+const props = defineProps({
+  timelineItem: {
+    type: Object,
+    required: true,
+    validator: isTimelineItemValid
+  }
+})
 
 const hourLinkClasses = [
   'absolute -top-4 left-1/2 -translate-x-1/2 rounded px-2 font-mono text-lg',
