@@ -2,8 +2,11 @@
 import TheLogo from './TheLogo.vue'
 import TheHeaderProgress from './TheHeaderProgress.vue'
 import { PAGE_TIMELINE, PAGE_PROGRESS } from '@/constants'
+import { isPageValid } from '@/validators'
 
-const emit = defineEmits('updateCurrentPage')
+const emit = defineEmits({
+  updateCurrentPage: isPageValid
+})
 </script>
 
 <template>

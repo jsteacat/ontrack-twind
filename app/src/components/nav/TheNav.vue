@@ -11,7 +11,9 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['updateCurrentPage'])
+const emit = defineEmits({
+  updateCurrentPage: isPageValid
+})
 </script>
 
 <template>
