@@ -16,12 +16,24 @@ export function isTimelineItemsValid(items) {
   return items.every(isTimelineItemValid)
 }
 
+export function isActivityItemValid(activity) {
+  return isNotEmptyString(activity)
+}
+
+export function isActivityItemsValid(items) {
+  return items.every(isActivityItemValid)
+}
+
 export function isSelectOptionsValid(options) {
   return options.every(isSelectOptionValid)
 }
 
 export function isUndefinedOrNull(value) {
   return [null, undefined].includes(value)
+}
+
+function isNotEmptyString(value) {
+  return isString(value) && value.length > 0
 }
 
 function isSelectOptionValid({ value, label }) {
