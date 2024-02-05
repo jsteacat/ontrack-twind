@@ -5,17 +5,33 @@ export function isPageValid(page) {
 }
 
 export function isTimelineItemValid({ hour }) {
-  return typeof hour === 'number' && hour >= MIDNIGHT_HOUR && hour < HOURS_IN_DAY
+  return isNumber(hour) && isHourValid(hour)
+}
+
+export function isHourValid(hour) {
+  return hour >= MIDNIGHT_HOUR && hour < HOURS_IN_DAY
 }
 
 export function isTimelineItemsValid(items) {
   return items.every(isTimelineItemValid)
 }
 
-function isSelectOptionValid({ value, label }) {
-  return typeof value === 'number' && typeof label === 'string'
-}
-
 export function isSelectOptionsValid(options) {
   return options.every(isSelectOptionValid)
+}
+
+export function isUndefinedOrNull(value) {
+  return [null, undefined].includes(value)
+}
+
+function isSelectOptionValid({ value, label }) {
+  return isNumber(value) && isString(label)
+}
+
+function isNumber(value) {
+  return typeof value === 'number'
+}
+
+function isString(value) {
+  return typeof value === 'string'
 }
