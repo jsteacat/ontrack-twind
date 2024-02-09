@@ -32,6 +32,10 @@ export function isButtonTypeValid(type) {
   return BUTTON_TYPES.includes(type)
 }
 
+export function isUndefined(value) {
+  return value === undefined
+}
+
 export function isUndefinedOrNull(value) {
   return [null, undefined].includes(value)
 }
