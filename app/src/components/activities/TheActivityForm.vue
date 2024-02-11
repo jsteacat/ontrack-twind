@@ -25,6 +25,7 @@ async function submit() {
       v-model="activity"
       class="w-full rounded border px-4 text-xl"
       placeholder="Activity name"
+      @keyup.enter="submit"
     />
     <BaseButton :disabled="activity.trim() === ''">
       <PlusIcon class="h-8" />
