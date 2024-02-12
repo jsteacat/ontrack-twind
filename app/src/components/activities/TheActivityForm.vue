@@ -2,10 +2,10 @@
 import { nextTick, ref } from 'vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
-import { isActivityItemValid } from '@/validators'
+import { isNotEmptyString } from '@/validators'
 
 const emit = defineEmits({
-  submit: isActivityItemValid
+  submit: isNotEmptyString
 })
 
 const activity = ref('')

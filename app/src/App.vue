@@ -33,8 +33,9 @@ function createActivity(name) {
     })
 }
 
-function deleteActivity(activity) {
-  activities.value.splice(activities.value.indexOf(activity), 1)
+function deleteActivity(id) {
+  console.log(id)
+  activities.value = activities.value.filter((activity) => activity.id !== id)
 }
 </script>
 
