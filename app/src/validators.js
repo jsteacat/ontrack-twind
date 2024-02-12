@@ -17,7 +17,7 @@ export function isTimelineItemsValid(items) {
 }
 
 export function isActivityItemValid(activity) {
-  return isNotEmptyString(activity)
+  return isNotEmptyString(activity.name)
 }
 
 export function isActivityItemsValid(items) {

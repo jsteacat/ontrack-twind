@@ -18,6 +18,7 @@ export const BUTTON_TYPES = [BUTTON_TYPE_NEUTRAL, BUTTON_TYPE_DANGER, BUTTON_TYP
 
 export const HOURS_IN_DAY = 24
 export const MIDNIGHT_HOUR = 0
+export const SECONDS_IN_HOUR = 3600
 
 export const PERIOD_SELECT_OPTIONS = [
   {

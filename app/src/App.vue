@@ -9,21 +9,28 @@ import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from './constants'
 import {
   normalizePageHash,
   generateTimelineItems,
-  generateActivitySelectOptions
+  generateActivitySelectOptions,
+  generateActivities,
+  id
 } from './functions'
 
 const currentPage = ref(normalizePageHash())
-const timelineItems = generateTimelineItems()
-const activities = ref(['Coding', 'Reading', 'Training'])
+const activities = ref(generateActivities())
 
+const timelineItems = generateTimelineItems()
 const activitySelectOptions = generateActivitySelectOptions(activities.value)
 
 function goTo(page) {
   currentPage.value = page
 }
 
-function createActivity(activity) {
-  if (activity) activities.value.unshift(activity)
+function createActivity(name) {
+  if (name)
+    activities.value.unshift({
+      id: id(),
+      name,
+      secondsToComplete: 0
+    })
 }
 
 function deleteActivity(activity) {
