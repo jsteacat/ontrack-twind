@@ -36,6 +36,10 @@ export function isUndefined(value) {
   return value === undefined
 }
 
+export function isNull(value) {
+  return value === null
+}
+
 export function isUndefinedOrNull(value) {
   return [null, undefined].includes(value)
 }
@@ -44,14 +48,14 @@ export function isNotEmptyString(value) {
   return isString(value) && value.length > 0
 }
 
+export function isNumber(value) {
+  return typeof value === 'number'
+}
+
 function isSelectOptionValid({ value, label }) {
   return (isNumber(value) || isNotEmptyString(value)) && isNotEmptyString(label)
 }
 
-function isNumber(value) {
-  return typeof value === 'number'
-}
-
-function isString(value) {
+export function isString(value) {
   return typeof value === 'string'
 }
