@@ -1,5 +1,21 @@
-import { PAGE_TIMELINE, HOURS_IN_DAY, MIDNIGHT_HOUR, SECONDS_IN_HOUR } from '@/constants'
+import {
+  PAGE_TIMELINE,
+  HOURS_IN_DAY,
+  MIDNIGHT_HOUR,
+  SECONDS_IN_HOUR,
+  SECONDS_IN_MINUTE,
+  MINUTES_IN_HOUR
+} from '@/constants'
 import { isNull, isPageValid } from '@/validators'
+
+function generatePeriodSelectOptionsLabel(period) {
+  const hours = Math.floor(period / MINUTES_IN_HOUR)
+    .toString()
+    .padStart(2, '0')
+
+  const minutes = (period % MINUTES_IN_HOUR).toString().padStart(2, '0')
+  return `${hours}:${minutes}`
+}
 
 export function id() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
@@ -40,5 +56,14 @@ export function generateActivities() {
     id: id(),
     name,
     secondsToComplete: hours * SECONDS_IN_HOUR
+  }))
+}
+
+export function generatePeriodSelectOptions() {
+  const periodsInMinutes = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180]
+
+  return periodsInMinutes.map((period) => ({
+    value: period * SECONDS_IN_MINUTE,
+    label: generatePeriodSelectOptionsLabel(period)
   }))
 }

@@ -29,7 +29,7 @@ const emit = defineEmits({
     </div>
     <div>
       <BaseSelect
-        placeholder="h:mm"
+        placeholder="hh:mm"
         :options="PERIOD_SELECT_OPTIONS"
         :selected="activity.secondsToComplete || null"
         class="font-mono"

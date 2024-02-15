@@ -17,6 +17,7 @@ export function isTimelineItemsValid(items) {
 }
 
 export function isActivityItemValid({ id, name, secondsToComplete }) {
+  if (isNull(id)) return true
   return [isNotEmptyString(id), isNotEmptyString(name), isNumber(secondsToComplete)].every(Boolean)
 }
 
