@@ -4,7 +4,9 @@ import {
   MIDNIGHT_HOUR,
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
-  MINUTES_IN_HOUR
+  MINUTES_IN_HOUR,
+  PERIODS_IN_MINUTES,
+  MILLISECONDS_IN_SECOND
 } from '@/constants'
 import { isNull, isPageValid } from '@/validators'
 
@@ -41,7 +43,7 @@ export function generateTimelineItems() {
   const timelineItems = []
 
   for (let hour = MIDNIGHT_HOUR; hour < HOURS_IN_DAY; hour += 1) {
-    timelineItems.push({ hour, activityId: null })
+    timelineItems.push({ hour, activityId: null, activitySeconds: 0 })
   }
 
   return timelineItems
@@ -60,10 +62,16 @@ export function generateActivities() {
 }
 
 export function generatePeriodSelectOptions() {
-  const periodsInMinutes = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180]
-
-  return periodsInMinutes.map((period) => ({
+  return PERIODS_IN_MINUTES.map((period) => ({
     value: period * SECONDS_IN_MINUTE,
     label: generatePeriodSelectOptionsLabel(period)
   }))
+}
+
+export function formatSeconds(seconds) {
+  const date = new Date()
+  date.setTime(Math.abs(seconds) * MILLISECONDS_IN_SECOND)
+  const utc = date.toUTCString()
+
+  return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
 }
