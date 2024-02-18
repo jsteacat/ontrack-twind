@@ -7,7 +7,8 @@ import {
   isActivityItemsValid,
   isTimelineItemValid,
   isActivityItemValid,
-  isPageValid
+  isPageValid,
+  isNumber
 } from '@/validators'
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants.js'
 
@@ -37,6 +38,9 @@ const props = defineProps({
 const emit = defineEmits({
   setTimelineItemActivity(timelineItem, activity) {
     return [isTimelineItemValid(timelineItem), isActivityItemValid(activity)].every(Boolean)
+  },
+  updateTimelineItemActivitySeconds(timelineItem, seconds) {
+    return [isTimelineItemValid(timelineItem), isNumber(seconds)].every(Boolean)
   }
 })
 
@@ -74,6 +78,7 @@ watchPostEffect(async () => {
         :activity-select-options="activitySelectOptions"
         @scroll-to-hour="scrollToHour"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
+        @update-activity-seconds="emit('updateTimelineItemActivitySeconds', timelineItem, $event)"
       />
     </ul>
   </div>

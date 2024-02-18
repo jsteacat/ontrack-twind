@@ -55,6 +55,10 @@ function setTimelineItemActivity(timelineItem, activity) {
 function setActivitySecondsToComplete(activity, secondsToComplete) {
   activity.secondsToComplete = secondsToComplete
 }
+
+function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
+  timelineItem.activitySeconds = activitySeconds
+}
 </script>
 
 <template>
@@ -69,10 +73,12 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
       :activity-select-options="activitySelectOptions"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
+      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
+      :timeline-items="timelineItems"
       @create-activity="createActivity"
       @delete-activity="deleteActivity"
       @set-activity-seconds-to-complete="setActivitySecondsToComplete"
