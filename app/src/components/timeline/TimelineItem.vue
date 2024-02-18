@@ -50,6 +50,6 @@ function selectActivity(id) {
       placeholder="Rest"
       @select="selectActivity($event)"
     />
-    <TimelineStopwatch :seconds="timelineItem.activitySeconds" />
+    <TimelineStopwatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
   </li>
 </template>
