@@ -37,7 +37,11 @@ const timelineItemRefs = ref([])
 
 onMounted(() => {
   const currentHour = new Date().getHours()
-  timelineItemRefs.value[currentHour - 1].$el.scrollIntoView({ behavior: 'smooth' })
+  if (currentHour === 0) {
+    document.body.scrollIntoView({ behavior: 'smooth' })
+  } else {
+    timelineItemRefs.value[currentHour - 1].$el.scrollIntoView({ behavior: 'smooth' })
+  }
 })
 </script>
 
