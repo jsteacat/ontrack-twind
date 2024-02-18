@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted, ref } from 'vue'
 import TimelineItem from '@/components/timeline/TimelineItem.vue'
 import {
   isTimelineItemsValid,
@@ -31,12 +32,20 @@ const emit = defineEmits({
     return [isTimelineItemValid(timelineItem), isActivityItemValid(activity)].every(Boolean)
   }
 })
+
+const timelineItemRefs = ref([])
+
+onMounted(() => {
+  const currentHour = new Date().getHours()
+  timelineItemRefs.value[currentHour - 1].$el.scrollIntoView({ behavior: 'smooth' })
+})
 </script>
 
 <template>
   <div class="mt-10">
     <ul>
       <TimelineItem
+        ref="timelineItemRefs"
         v-for="timelineItem in timelineItems"
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
