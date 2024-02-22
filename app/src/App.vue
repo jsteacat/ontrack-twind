@@ -11,7 +11,8 @@ import {
   generateTimelineItems,
   generateActivitySelectOptions,
   generateActivities,
-  id
+  id,
+  generatePeriodSelectOptions
 } from './functions'
 
 const currentPage = ref(normalizePageHash())
@@ -23,7 +24,13 @@ const activitySelectOptions = computed(() => generateActivitySelectOptions(activ
 const timeline = ref()
 
 provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
+provide('setActivitySecondsToComplete', setActivitySecondsToComplete)
+provide('setTimelineItemActivity', setTimelineItemActivity)
+provide('createActivity', createActivity)
+provide('deleteActivity', deleteActivity)
 provide('timelineItems', timelineItems.value)
+provide('activitySelectOptions', activitySelectOptions.value)
+provide('periodSelectOptions', generatePeriodSelectOptions())
 
 function goTo(page) {
   if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
@@ -51,8 +58,8 @@ function deleteActivity(activity) {
   activities.value.splice(activities.value.indexOf(activity), 1)
 }
 
-function setTimelineItemActivity(timelineItem, activity) {
-  timelineItem.activityId = activity.id
+function setTimelineItemActivity(timelineItem, activityId) {
+  timelineItem.activityId = activityId
 }
 
 function setActivitySecondsToComplete(activity, secondsToComplete) {
@@ -72,18 +79,9 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
       ref="timeline"
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      :activities="activities"
-      :activity-select-options="activitySelectOptions"
       :current-page="currentPage"
-      @set-timeline-item-activity="setTimelineItemActivity"
     />
-    <TheActivities
-      v-show="currentPage === PAGE_ACTIVITIES"
-      :activities="activities"
-      @create-activity="createActivity"
-      @delete-activity="deleteActivity"
-      @set-activity-seconds-to-complete="setActivitySecondsToComplete"
-    />
+    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
 

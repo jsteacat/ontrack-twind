@@ -1,17 +1,14 @@
 <script setup>
-import { nextTick, ref } from 'vue'
+import { inject, nextTick, ref } from 'vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
-import { isNotEmptyString } from '@/validators'
 
-const emit = defineEmits({
-  submit: isNotEmptyString
-})
+const createActivity = inject('createActivity')
 
 const activity = ref('')
 
 async function submit() {
-  emit('submit', activity.value)
+  createActivity(activity.value)
   activity.value = ''
   await nextTick()
   window.scrollTo(0, -document.body.scrollHeight)

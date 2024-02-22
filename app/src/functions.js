@@ -4,7 +4,6 @@ import {
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
-  PERIODS_IN_MINUTES,
   MILLISECONDS_IN_SECOND
 } from '@/constants'
 import { isNull, isPageValid } from '@/validators'
@@ -70,7 +69,8 @@ export function generateActivities() {
 }
 
 export function generatePeriodSelectOptions() {
-  return PERIODS_IN_MINUTES.map((period) => ({
+  const periodsInMinutes = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180]
+  return periodsInMinutes.map((period) => ({
     value: period * SECONDS_IN_MINUTE,
     label: generatePeriodSelectOptionsLabel(period)
   }))
