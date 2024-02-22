@@ -7,8 +7,7 @@ import {
   isActivityItemsValid,
   isTimelineItemValid,
   isActivityItemValid,
-  isPageValid,
-  isNumber
+  isPageValid
 } from '@/validators'
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants.js'
 
@@ -38,9 +37,6 @@ const props = defineProps({
 const emit = defineEmits({
   setTimelineItemActivity(timelineItem, activity) {
     return [isTimelineItemValid(timelineItem), isActivityItemValid(activity)].every(Boolean)
-  },
-  updateTimelineItemActivitySeconds(timelineItem, seconds) {
-    return [isTimelineItemValid(timelineItem), isNumber(seconds)].every(Boolean)
   }
 })
 
@@ -48,9 +44,9 @@ defineExpose({ scrollToHour })
 
 const timelineItemRefs = ref([])
 
-function scrollToHour(hour = null) {
+function scrollToHour(hour = null, isSmooth = true) {
   hour ??= new Date().getHours()
-  const options = { behavior: 'smooth' }
+  const options = { behavior: isSmooth ? 'smooth' : 'auto' }
   if (hour === MIDNIGHT_HOUR) {
     document.body.scrollIntoView(options)
   } else {
@@ -61,7 +57,7 @@ function scrollToHour(hour = null) {
 watchPostEffect(async () => {
   if (props.currentPage === PAGE_TIMELINE) {
     await nextTick()
-    scrollToHour()
+    scrollToHour(null, false)
   }
 })
 </script>
@@ -78,7 +74,6 @@ watchPostEffect(async () => {
         :activity-select-options="activitySelectOptions"
         @scroll-to-hour="scrollToHour"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
-        @update-activity-seconds="emit('updateTimelineItemActivitySeconds', timelineItem, $event)"
       />
     </ul>
   </div>

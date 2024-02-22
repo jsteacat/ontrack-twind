@@ -6,8 +6,7 @@ import {
   isSelectOptionsValid,
   isActivityItemsValid,
   isActivityItemValid,
-  isHourValid,
-  isNumber
+  isHourValid
 } from '@/validators'
 import { NULLABLE_ACTIVITY } from '@/constants'
 import TimelineStopwatch from '@/components/timeline/TimelineStopwatch.vue'
@@ -32,8 +31,7 @@ const props = defineProps({
 
 const emit = defineEmits({
   selectActivity: isActivityItemValid,
-  scrollToHour: isHourValid,
-  updateActivitySeconds: isNumber
+  scrollToHour: isHourValid
 })
 
 function getActivityById(id) {
@@ -57,10 +55,6 @@ function selectActivity(id) {
       placeholder="Rest"
       @select="selectActivity($event)"
     />
-    <TimelineStopwatch
-      :seconds="timelineItem.activitySeconds"
-      :hour="timelineItem.hour"
-      @update-seconds="emit('updateActivitySeconds', $event)"
-    />
+    <TimelineStopwatch :timeline-item="timelineItem" />
   </li>
 </template>
