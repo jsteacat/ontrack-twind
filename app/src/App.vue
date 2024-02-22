@@ -23,6 +23,7 @@ const activitySelectOptions = computed(() => generateActivitySelectOptions(activ
 const timeline = ref()
 
 provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
+provide('timelineItems', timelineItems.value)
 
 function goTo(page) {
   if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
@@ -79,7 +80,6 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
-      :timeline-items="timelineItems"
       @create-activity="createActivity"
       @delete-activity="deleteActivity"
       @set-activity-seconds-to-complete="setActivitySecondsToComplete"
