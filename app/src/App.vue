@@ -7,21 +7,18 @@ import TheHeader from './components/header/TheHeader.vue'
 import TheNav from './components/nav/TheNav.vue'
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from './constants'
 import {
-  normalizePageHash,
   generateTimelineItems,
   generateActivitySelectOptions,
   generateActivities,
   id,
   generatePeriodSelectOptions
 } from './functions'
+import { currentPage, timelineRef } from '@/useRouter'
 
-const currentPage = ref(normalizePageHash())
 const activities = ref(generateActivities())
 
 const timelineItems = ref(generateTimelineItems(activities.value))
 const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
-
-const timeline = ref()
 
 provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
 provide('setActivitySecondsToComplete', setActivitySecondsToComplete)
@@ -31,13 +28,6 @@ provide('deleteActivity', deleteActivity)
 provide('timelineItems', timelineItems.value)
 provide('activitySelectOptions', activitySelectOptions.value)
 provide('periodSelectOptions', generatePeriodSelectOptions())
-
-function goTo(page) {
-  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
-    timeline.value.scrollToHour()
-  }
-  currentPage.value = page
-}
 
 function createActivity(name) {
   if (name)
@@ -72,18 +62,17 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 </script>
 
 <template>
-  <TheHeader @update-current-page="goTo($event)" />
+  <TheHeader />
 
   <main class="flex flex-grow flex-col">
     <TheTimeline
-      ref="timeline"
+      ref="timelineRef"
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      :current-page="currentPage"
     />
     <TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
 
-  <TheNav :current-page="currentPage" @update-current-page="goTo($event)" />
+  <TheNav />
 </template>

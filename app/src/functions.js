@@ -1,12 +1,11 @@
 import {
-  PAGE_TIMELINE,
   HOURS_IN_DAY,
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND
 } from '@/constants'
-import { isNull, isPageValid } from '@/validators'
+import { isNull } from '@/validators'
 
 function generatePeriodSelectOptionsLabel(period) {
   const hours = Math.floor(period / MINUTES_IN_HOUR)
@@ -19,18 +18,6 @@ function generatePeriodSelectOptionsLabel(period) {
 
 export function id() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
-}
-
-export function normalizePageHash() {
-  // hash without '#'
-  const hash = window.location.hash.slice(1)
-
-  if (isPageValid(hash)) {
-    return hash
-  }
-
-  window.location.hash = PAGE_TIMELINE
-  return PAGE_TIMELINE
 }
 
 export function normalizeSelectValue(value) {
