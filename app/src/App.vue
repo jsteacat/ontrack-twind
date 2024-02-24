@@ -1,60 +1,35 @@
 <script setup>
-import { computed, provide, readonly, ref } from 'vue'
+import { provide, readonly, ref } from 'vue'
 import TheTimeline from '@/pages/TheTimeline.vue'
 import TheActivities from '@/pages/TheActivities.vue'
 import TheProgress from '@/pages/TheProgress.vue'
 import TheHeader from '@/components/header/TheHeader.vue'
 import TheNav from '@/components/nav/TheNav.vue'
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from '@/constants'
-import {
-  generateTimelineItems,
-  generateActivitySelectOptions,
-  generateActivities,
-  id,
-  generatePeriodSelectOptions
-} from './functions'
+import { generateTimelineItems, generatePeriodSelectOptions } from './functions'
 import { currentPage, timelineRef } from '@/useRouter'
 import * as keys from '@/keys'
-
-const activities = ref(generateActivities())
+import {
+  activities,
+  activitySelectOptions,
+  createActivity,
+  deleteActivity,
+  setActivitySecondsToComplete
+} from '@/useActivities'
 
 const timelineItems = ref(generateTimelineItems(activities.value))
-const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
 provide(keys.updateTimelineItemActivitySecondsKey, updateTimelineItemActivitySeconds)
 provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete)
 provide(keys.setTimelineItemActivityKey, setTimelineItemActivity)
 provide(keys.createActivityKey, createActivity)
 provide(keys.deleteActivityKey, deleteActivity)
-provide(keys.timelineItemsKey, readonly(timelineItems.value))
-provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions.value))
+provide(keys.timelineItemsKey, readonly(timelineItems))
+provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions))
 provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()))
-
-function createActivity(name) {
-  if (name)
-    activities.value.unshift({
-      id: id(),
-      name,
-      secondsToComplete: 0
-    })
-}
-
-function deleteActivity(activity) {
-  timelineItems.value.forEach((timelineItem) => {
-    if (timelineItem.activityId === activity.id) {
-      timelineItem.activityId = null
-      timelineItem.activitySeconds = 0
-    }
-  })
-  activities.value.splice(activities.value.indexOf(activity), 1)
-}
 
 function setTimelineItemActivity(timelineItem, activityId) {
   timelineItem.activityId = activityId
-}
-
-function setActivitySecondsToComplete(activity, secondsToComplete) {
-  activity.secondsToComplete = secondsToComplete
 }
 
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
