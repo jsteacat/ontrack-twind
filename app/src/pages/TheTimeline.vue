@@ -1,18 +1,10 @@
 <script setup>
 import { nextTick, ref, watchPostEffect } from 'vue'
 import TimelineItem from '@/components/timeline/TimelineItem.vue'
-import { isTimelineItemsValid } from '@/validators'
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants'
 import { currentPage } from '@/useRouter'
+import { timelineItems } from '@/useTimelineItems'
 import { getCurrentHour } from '@/functions'
-
-defineProps({
-  timelineItems: {
-    type: Object,
-    required: true,
-    validator: isTimelineItemsValid
-  }
-})
 
 defineExpose({ scrollToHour })
 

@@ -1,8 +1,22 @@
 import { computed, ref } from 'vue'
-import { generateActivitySelectOptions, generateActivities, id } from './functions'
+import { id } from './functions'
+import { SECONDS_IN_HOUR } from '@/constants.js'
+
+function generateActivities() {
+  return ['Coding', 'Reading', 'Training'].map((name, hours) => ({
+    id: id(),
+    name,
+    secondsToComplete: hours * SECONDS_IN_HOUR
+  }))
+}
 
 export const activities = ref(generateActivities())
-export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
+
+function generateActivitySelectOptions() {
+  return activities.value.map(({ name, id }) => ({ label: name, value: id }))
+}
+
+export const activitySelectOptions = computed(() => generateActivitySelectOptions())
 
 export function createActivity(name) {
   if (name)
@@ -14,12 +28,6 @@ export function createActivity(name) {
 }
 
 export function deleteActivity(activity) {
-  timelineItems.value.forEach((timelineItem) => {
-    if (timelineItem.activityId === activity.id) {
-      timelineItem.activityId = null
-      timelineItem.activitySeconds = 0
-    }
-  })
   activities.value.splice(activities.value.indexOf(activity), 1)
 }
 
