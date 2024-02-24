@@ -1,11 +1,11 @@
 <script setup>
-import { computed, provide, ref } from 'vue'
-import TheTimeline from './pages/TheTimeline.vue'
-import TheActivities from './pages/TheActivities.vue'
-import TheProgress from './pages/TheProgress.vue'
-import TheHeader from './components/header/TheHeader.vue'
-import TheNav from './components/nav/TheNav.vue'
-import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from './constants'
+import { computed, provide, readonly, ref } from 'vue'
+import TheTimeline from '@/pages/TheTimeline.vue'
+import TheActivities from '@/pages/TheActivities.vue'
+import TheProgress from '@/pages/TheProgress.vue'
+import TheHeader from '@/components/header/TheHeader.vue'
+import TheNav from '@/components/nav/TheNav.vue'
+import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from '@/constants'
 import {
   generateTimelineItems,
   generateActivitySelectOptions,
@@ -14,20 +14,21 @@ import {
   generatePeriodSelectOptions
 } from './functions'
 import { currentPage, timelineRef } from '@/useRouter'
+import * as keys from '@/keys'
 
 const activities = ref(generateActivities())
 
 const timelineItems = ref(generateTimelineItems(activities.value))
 const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
-provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
-provide('setActivitySecondsToComplete', setActivitySecondsToComplete)
-provide('setTimelineItemActivity', setTimelineItemActivity)
-provide('createActivity', createActivity)
-provide('deleteActivity', deleteActivity)
-provide('timelineItems', timelineItems.value)
-provide('activitySelectOptions', activitySelectOptions.value)
-provide('periodSelectOptions', generatePeriodSelectOptions())
+provide(keys.updateTimelineItemActivitySecondsKey, updateTimelineItemActivitySeconds)
+provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete)
+provide(keys.setTimelineItemActivityKey, setTimelineItemActivity)
+provide(keys.createActivityKey, createActivity)
+provide(keys.deleteActivityKey, deleteActivity)
+provide(keys.timelineItemsKey, readonly(timelineItems.value))
+provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions.value))
+provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()))
 
 function createActivity(name) {
   if (name)

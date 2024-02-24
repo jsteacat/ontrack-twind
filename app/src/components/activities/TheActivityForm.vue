@@ -2,8 +2,9 @@
 import { inject, nextTick, ref } from 'vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
+import { createActivityKey } from '@/keys'
 
-const createActivity = inject('createActivity')
+const createActivity = inject(createActivityKey)
 
 const activity = ref('')
 
