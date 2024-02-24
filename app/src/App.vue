@@ -58,7 +58,7 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
 }
 
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
-  timelineItem.activitySeconds = activitySeconds
+  timelineItem.activitySeconds = activitySeconds || 0
 }
 </script>
 

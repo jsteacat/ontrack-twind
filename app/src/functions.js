@@ -20,6 +20,10 @@ export function id() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }
 
+export function getCurrentHour() {
+  return new Date().getHours()
+}
+
 export function normalizeSelectValue(value) {
   return isNull(value) || isNaN(value) ? value : +value
 }

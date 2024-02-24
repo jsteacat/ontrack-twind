@@ -35,7 +35,7 @@ const periodSelectOptions = inject(periodSelectOptionsKey)
         :options="periodSelectOptions"
         :selected="activity.secondsToComplete || null"
         class="grow font-mono"
-        @select="setActivitySecondsToComplete(activity, $event || 0)"
+        @select="setActivitySecondsToComplete(activity, $event)"
       />
       <ActivitySecondsToComplete v-if="activity.secondsToComplete" :activity="activity" />
     </div>
