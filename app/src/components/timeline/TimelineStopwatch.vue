@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
   BUTTON_TYPE_DANGER,
   BUTTON_TYPE_SUCCESS,
@@ -44,6 +44,13 @@ function reset() {
   updateTimelineItemActivitySeconds(props.timelineItem, 0)
   dynamicSeconds.value = 0
 }
+
+watch(
+  () => props.timelineItem.activityId,
+  () => {
+    updateTimelineItemActivitySeconds(props.timelineItem, dynamicSeconds.value)
+  }
+)
 </script>
 
 <template>
