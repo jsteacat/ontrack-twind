@@ -27,10 +27,10 @@ export function createActivity(name) {
     })
 }
 
-export function deleteActivity(activity) {
-  activities.value.splice(activities.value.indexOf(activity), 1)
+export function updateActivity(activity, fields) {
+  return Object.assign(activity, fields)
 }
 
-export function setActivitySecondsToComplete(activity, secondsToComplete) {
-  activity.secondsToComplete = secondsToComplete
+export function deleteActivity(activity) {
+  activities.value.splice(activities.value.indexOf(activity), 1)
 }
