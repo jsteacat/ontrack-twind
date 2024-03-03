@@ -10,7 +10,7 @@ import { ArrowPathIcon, PauseIcon, PlayIcon } from '@heroicons/vue/24/outline'
 import BaseButton from '@/components/base/BaseButton.vue'
 import { isTimelineItemValid } from '@/validators'
 import { formatSeconds, getCurrentHour } from '@/functions'
-import { updateTimelineItemActivitySeconds } from '@/useTimelineItems'
+import { updateTimelineItem } from '@/useTimelineItems'
 
 const props = defineProps({
   timelineItem: {
@@ -28,7 +28,7 @@ function start() {
   if (intervalId.value) return
   intervalId.value = setInterval(() => {
     dynamicSeconds.value += 1
-    updateTimelineItemActivitySeconds(props.timelineItem, dynamicSeconds.value)
+    updateTimelineItem(props.timelineItem, { activitySeconds: dynamicSeconds.value })
   }, MILLISECONDS_IN_SECOND)
 }
 
@@ -41,14 +41,14 @@ function stop() {
 
 function reset() {
   stop()
-  updateTimelineItemActivitySeconds(props.timelineItem, 0)
+  updateTimelineItem(props.timelineItem, { activitySeconds: 0 })
   dynamicSeconds.value = 0
 }
 
 watch(
   () => props.timelineItem.activityId,
   () => {
-    updateTimelineItemActivitySeconds(props.timelineItem, dynamicSeconds.value)
+    updateTimelineItem(props.timelineItem, { activitySeconds: dynamicSeconds.value })
   }
 )
 </script>
